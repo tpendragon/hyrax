@@ -4,6 +4,15 @@ module Hyrax
   # Hyrax::Actors::InitializeWorkflowActor, so that the correct
   # workflow can be kicked off.
   class DefaultAdminSetActor < Hyrax::Actors::AbstractActor
+
+    # initialize the default admin set
+    #
+    # @return [String] the default adminset id
+    def self.initialize_default_admin_set
+      actor =  new(nil,nil,nil)
+      actor.send(:default_admin_set_id)
+    end
+
     def create(attributes)
       ensure_admin_set_attribute!(attributes)
       next_actor.create(attributes)
@@ -14,6 +23,12 @@ module Hyrax
       next_actor.update(attributes)
     end
 
+    protected
+      def default_admin_set_id
+        create_default_admin_set unless default_exists?
+        DEFAULT_ID
+      end
+
     private
 
       def ensure_admin_set_attribute!(attributes)
@@ -22,11 +37,6 @@ module Hyrax
       end
 
       DEFAULT_ID = 'admin_set/default'.freeze
-
-      def default_admin_set_id
-        create_default_admin_set unless default_exists?
-        DEFAULT_ID
-      end
 
       def default_exists?
         AdminSet.exists?(DEFAULT_ID)

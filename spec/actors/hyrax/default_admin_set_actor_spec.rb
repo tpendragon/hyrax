@@ -40,4 +40,12 @@ RSpec.describe Hyrax::DefaultAdminSetActor do
       end
     end
   end
+
+  describe "initialize_default_admin_set" do
+    it "creates the default adminset" do
+      expect do
+        expect(described_class.initialize_default_admin_set).to eq('admin_set/default')
+      end.to change { AdminSet.count }.by(1)
+    end
+  end
 end
