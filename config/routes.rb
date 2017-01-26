@@ -199,7 +199,7 @@ Hyrax::Engine.routes.draw do
   get 'about' => 'pages#show', id: 'about_page'
 
   # Static page routes
-  %w(help terms zotero mendeley agreement versions).each do |action|
+  %w(help terms zotero mendeley agreement).each do |action|
     get action, controller: 'static', action: action, as: action
   end
 end
