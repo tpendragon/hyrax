@@ -501,6 +501,7 @@ en:
         menu: "Dashboard"
         my: "My Dashboard"
         highlights: "Highlights"
+        operations: 'Operations'
         transfers: "Transfers"
         shares: "Shares"
       language_switch: "Switch language"

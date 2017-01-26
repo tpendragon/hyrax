@@ -13,12 +13,13 @@ class BatchCreateJob < ActiveJob::Base
   # @param [Hash<String => String>] resource_types
   # @param [Array<String>] uploaded_files Hyrax::UploadedFile IDs
   # @param [Hash] attributes attributes to apply to all works, including :model
-  # @param [BatchCreateOperation] log
+  # @param [Hyrax::BatchCreateOperation] a log storing the status of the job
   def perform(user, titles, resource_types, uploaded_files, attributes, log)
     log.performing!
     titles ||= {}
     resource_types ||= {}
     create(user, titles, resource_types, uploaded_files, attributes, log)
+    log.success!
   end
 
   private

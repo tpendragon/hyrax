@@ -20,6 +20,18 @@ describe ProxyDepositRequest, type: :model do
 
   it { is_expected.to delegate_method(:to_s).to(:solr_doc) }
 
+  describe "operations" do
+    it 'creates and operation and starts a job' do
+      expect(Hyrax::Operation).to receive(:create!).with(user: sender,
+                                                         operation_type: 'Change Depositor').and_call_original
+      expect(ContentDepositorChangeEventJob).to receive(:perform_later).with(work,
+                                                                             receiver,
+                                                                             an_instance_of(Hyrax::Operation),
+                                                                             false)
+      subject.transfer!
+    end
+  end
+
   context "After approval" do
     before do
       subject.transfer!

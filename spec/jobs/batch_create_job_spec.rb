@@ -46,6 +46,7 @@ describe BatchCreateJob do
                                                               uploaded_files: ['2']
                                                             },
                                                             child_log).and_return(true)
+      expect_any_instance_of(Hyrax::BatchCreateOperation).to receive(:success!)
       subject
     end
 
