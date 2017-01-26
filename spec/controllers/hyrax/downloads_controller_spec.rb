@@ -8,9 +8,10 @@ describe Hyrax::DownloadsController do
     let(:file_set) do
       FactoryGirl.create(:file_with_work, user: user, content: File.open(fixture_path + '/image.png'))
     end
-    it 'calls render_404 if the object does not exist' do
-      expect(controller).to receive(:render_404) { controller.render body: nil }
-      get :show, params: { id: '8675309' }
+    it 'raises an error if the object does not exist' do
+      expect do
+        get :show, params: { id: '8675309' }
+      end.to raise_error Blacklight::Exceptions::InvalidSolrID
     end
 
     context "when user doesn't have access" do
@@ -68,16 +69,18 @@ describe Hyrax::DownloadsController do
         end
 
         context "that isn't persisted" do
-          it "returns 404 if the requested file does not exist" do
-            expect(controller).to receive(:render_404) { controller.render body: nil }
-            get :show, params: { id: file_set, file: 'thumbnail' }
+          it "raises an error if the requested file does not exist" do
+            expect do
+              get :show, params: { id: file_set, file: 'thumbnail' }
+            end.to raise_error ActiveFedora::ObjectNotFoundError
           end
         end
       end
 
-      it "returns 404 if the requested association does not exist" do
-        expect(controller).to receive(:render_404) { controller.render body: nil }
-        get :show, params: { id: file_set, file: 'non-existant' }
+      it "raises an error if the requested association does not exist" do
+        expect do
+          get :show, params: { id: file_set, file: 'non-existant' }
+        end.to raise_error ActiveFedora::ObjectNotFoundError
       end
     end
   end
