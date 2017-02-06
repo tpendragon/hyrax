@@ -43,6 +43,8 @@ module Hyrax
       has_many :members,
                predicate: ::RDF::Vocab::DC.isPartOf,
                class_name: 'ActiveFedora::Base'
+
+      before_destroy :check_if_not_default_set, :check_if_empty
     end
 
     def to_s
@@ -55,5 +57,23 @@ module Hyrax
     def permission_template
       Hyrax::PermissionTemplate.find_by!(admin_set_id: id)
     end
+
+    def default_set?
+      id == AdminSet::DEFAULT_ID
+    end
+
+    private
+
+      def check_if_empty
+        return true if members.empty?
+        errors[:base] << I18n.t('hyrax.admin.admin_sets.delete.error_not_empty')
+        throw :abort
+      end
+
+      def check_if_not_default_set
+        return true unless default_set?
+        errors[:base] << I18n.t('hyrax.admin.admin_sets.delete.error_default_set')
+        throw :abort
+      end
   end
 end
