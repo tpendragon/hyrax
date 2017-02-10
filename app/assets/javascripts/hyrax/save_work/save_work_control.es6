@@ -72,7 +72,6 @@ export class SaveWorkControl {
     return this.form.attr('id').startsWith('new')
   }
 
-
   /*
    * Call this when the form has been rendered
    */
@@ -89,6 +88,7 @@ export class SaveWorkControl {
 
     this.requiredMetadata = new ChecklistItem(this.element.find('#required-metadata'))
     this.requiredFiles = new ChecklistItem(this.element.find('#required-files'))
+    this.requiredAgreement = new ChecklistItem(this.element.find('#required-agreement'))
     new VisibilityComponent(this.element.find('.visibility'))
     this.preventSubmitUnlessValid()
     this.preventSubmitIfAlreadyInProgress()
@@ -144,8 +144,14 @@ export class SaveWorkControl {
     if (filesValid && this.uploads.hasNewFiles && this.depositAgreement.mustAgreeAgain) {
       // Force the user to agree again
       this.depositAgreement.setNotAccepted()
+      this.requiredAgreement.uncheck()
       return false
     }
-    return this.depositAgreement.isAccepted
+    if (!this.depositAgreement.isAccepted) {
+      this.requiredAgreement.uncheck()
+      return false
+    }
+    this.requiredAgreement.check()
+    return true
   }
 }
