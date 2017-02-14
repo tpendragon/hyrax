@@ -7,16 +7,16 @@ describe Hyrax::ActorFactory, :no_clean do
     it do
       is_expected.to eq [Hyrax::Actors::TransactionalRequest,
                          Hyrax::Actors::OptimisticLockValidator,
-                         Hyrax::CreateWithRemoteFilesActor,
-                         Hyrax::CreateWithFilesActor,
+                         Hyrax::Actors::CreateWithRemoteFilesActor,
+                         Hyrax::Actors::CreateWithFilesActor,
                          Hyrax::Actors::AddAsMemberOfCollectionsActor,
                          Hyrax::Actors::AddToWorkActor,
                          Hyrax::Actors::AssignRepresentativeActor,
                          Hyrax::Actors::AttachFilesActor,
                          Hyrax::Actors::ApplyOrderActor,
                          Hyrax::Actors::InterpretVisibilityActor,
-                         Hyrax::DefaultAdminSetActor,
-                         Hyrax::ApplyPermissionTemplateActor,
+                         Hyrax::Actors::DefaultAdminSetActor,
+                         Hyrax::Actors::ApplyPermissionTemplateActor,
                          Hyrax::Actors::GenericWorkActor,
                          Hyrax::Actors::InitializeWorkflowActor]
     end
@@ -27,16 +27,16 @@ describe Hyrax::ActorFactory, :no_clean do
     it "has the correct stack frames" do
       expect(subject.more_actors).to eq [
         Hyrax::Actors::OptimisticLockValidator,
-        Hyrax::CreateWithRemoteFilesActor,
-        Hyrax::CreateWithFilesActor,
+        Hyrax::Actors::CreateWithRemoteFilesActor,
+        Hyrax::Actors::CreateWithFilesActor,
         Hyrax::Actors::AddAsMemberOfCollectionsActor,
         Hyrax::Actors::AddToWorkActor,
         Hyrax::Actors::AssignRepresentativeActor,
         Hyrax::Actors::AttachFilesActor,
         Hyrax::Actors::ApplyOrderActor,
         Hyrax::Actors::InterpretVisibilityActor,
-        Hyrax::DefaultAdminSetActor,
-        Hyrax::ApplyPermissionTemplateActor,
+        Hyrax::Actors::DefaultAdminSetActor,
+        Hyrax::Actors::ApplyPermissionTemplateActor,
         Hyrax::Actors::GenericWorkActor,
         Hyrax::Actors::InitializeWorkflowActor
       ]
