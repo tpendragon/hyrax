@@ -36,7 +36,8 @@ module Hyrax
       # rubocop:disable Lint/HandleExceptions
       def create_default_admin_set
         AdminSet.create!(id: DEFAULT_ID, title: ['Default Admin Set']).tap do |_as|
-          PermissionTemplate.create!(admin_set_id: DEFAULT_ID, workflow_name: 'default')
+          # PermissionTemplate.create!(admin_set_id: DEFAULT_ID, workflow_id: Sipity::Workflow.default_workflow.id)
+          PermissionTemplate.create!(admin_set_id: DEFAULT_ID, workflow_id: workflow.id)
         end
       rescue ActiveFedora::IllegalOperation
         # It is possible that another thread created the AdminSet just before this method
