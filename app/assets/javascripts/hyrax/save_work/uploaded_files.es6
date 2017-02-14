@@ -7,12 +7,12 @@ export class UploadedFiles {
 
   get hasFileRequirement() {
     let fileRequirement = this.form.find('li#required-files')
-    return fileRequirement.size() > 0
+    return fileRequirement.length > 0
   }
 
   get hasFiles() {
     let fileField = this.form.find('input[name="uploaded_files[]"]')
-    return fileField.size() > 0
+    return fileField.length > 0
   }
 
   get hasNewFiles() {

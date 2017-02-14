@@ -57,7 +57,7 @@ module Hyrax
       end
 
       Hyrax::CurationConcern.actor_factory = Hyrax::ActorFactory
-      Hyrax::Workflow::WorkflowFactory.workflow_strategy = Hyrax::Workflow::WorkflowByAdminSetStrategy
+      Hyrax::Workflow::WorkflowFactory.workflow_strategy ||= Hyrax::Workflow::WorkflowByAdminSetStrategy
     end
 
     initializer 'hyrax.assets.precompile' do |app|

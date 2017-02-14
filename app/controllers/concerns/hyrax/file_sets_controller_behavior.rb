@@ -104,7 +104,8 @@ module Hyrax
           empty_file_response(file)
         else
           update_metadata_from_upload_screen
-          actor.create_metadata(find_parent_by_id, params[:file_set])
+          actor.create_metadata(params[:file_set])
+          actor.attach_file_to_work(find_parent_by_id)
           if actor.create_content(file)
             response_for_successfully_processed_file
           else
